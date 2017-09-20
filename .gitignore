@@ -1,5 +1,20 @@
+# CDS-specific files
 .*
 !.gitignore
-.vs/
+*.jfm
+BuildAll.bat
+ClearUserPrograms.bat
+ClearUserSettings.bat
+PublishAll.bat
+VVBackup.bat
+[Tt]est[Dd]ata/
+!Bin/
+Bin/*.exe
+Bin/*.dll
+Bin/*.xml
+Bin/*.config
+Bin/OfficeInterop/
+Bin/Security/
 obj/
 bin/
+packages/
