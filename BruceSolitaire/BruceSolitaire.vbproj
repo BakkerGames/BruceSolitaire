@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
@@ -24,10 +26,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>213</ApplicationRevision>
     <ApplicationVersion>2016.8.11.213</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -83,6 +83,29 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\BruceSol.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>BruceSolitaire.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>BruceSolitaire.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>None</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -171,10 +194,12 @@
   <ItemGroup>
     <Content Include="Resources\BruceSol.ico" />
     <Content Include="Resources\CardBack71x95.bmp" />
+    <None Include="Resources\CardBack71x95.png" />
     <Content Include="Resources\CardDeck30x40.bmp" />
     <Content Include="Resources\CardDeck30x40.gif" />
     <Content Include="Resources\CardDeck71x95.bmp" />
     <Content Include="Resources\CardDeck71x95.gif" />
+    <None Include="Resources\CardDeck71x95.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -200,10 +225,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if exist "$(ProjectDir)bin\x86\Release\$(TargetFileName)" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetFileName)" "$(ProjectDir)..\..\EXE"
-if exist "$(ProjectDir)bin\x86\Release\$(TargetName).xml" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetName).xml" "$(ProjectDir)..\..\EXE"
-if exist "$(ProjectDir)bin\x86\Release\$(TargetFileName).config" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetFileName).config" "$(ProjectDir)..\..\EXE"
-</PostBuildEvent>
+    <PostBuildEvent>if exist "$(ProjectDir)bin\Release\$(TargetFileName)" xcopy /d /y "$(ProjectDir)bin\Release\$(TargetFileName)" "\Projects\EXE"
+if exist "$(ProjectDir)bin\Release\$(TargetFileName).config" xcopy /d /y "$(ProjectDir)bin\Release\$(TargetFileName).config" "\Projects\EXE"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
