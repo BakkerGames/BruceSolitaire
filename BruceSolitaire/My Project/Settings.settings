@@ -2,13 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="CallUpgrade" Provider="Arena_AppSettings.PortableSettingsProvider" Type="System.Boolean" Scope="User">
+    <Setting Name="CallUpgrade" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="GamesPlayed" Provider="Arena_AppSettings.PortableSettingsProvider" Type="System.Int32" Scope="User">
+    <Setting Name="GamesPlayed" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="GamesWon" Provider="Arena_AppSettings.PortableSettingsProvider" Type="System.Int32" Scope="User">
+    <Setting Name="GamesWon" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

@@ -37,17 +37,6 @@ Public Class FormMain
 
         Static FuncName As String = ObjName + "." + System.Reflection.MethodBase.GetCurrentMethod().Name
 
-        Try
-            If Arena_Bootstrap.BootstrapClass.CopyProgramsToLaunchPath Then
-                Me.Close()
-                Exit Sub
-            End If
-        Catch ex As Exception
-            MessageBox.Show(FuncName + vbCrLf + ex.Message, My.Application.Info.AssemblyName, MessageBoxButtons.OK)
-            Me.Close()
-            Exit Sub
-        End Try
-
         ' --- First call Upgrade to load setting from last version ---
         If My.Settings.CallUpgrade Then
             My.Settings.Upgrade()

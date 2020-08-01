@@ -11,7 +11,7 @@
     <AssemblyName>BruceSolitaire</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
@@ -85,12 +85,6 @@
     <ApplicationIcon>Resources\BruceSol.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Arena_AppSettings">
-      <HintPath>..\..\Bin\Arena_AppSettings.dll</HintPath>
-    </Reference>
-    <Reference Include="Arena_Bootstrap">
-      <HintPath>..\..\Bin\Arena_Bootstrap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -131,6 +125,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -205,9 +200,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if exist "$(ProjectDir)bin\x86\Release\$(TargetFileName)" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetFileName)" "$(ProjectDir)..\..\Bin"
-if exist "$(ProjectDir)bin\x86\Release\$(TargetName).xml" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetName).xml" "$(ProjectDir)..\..\Bin"
-if exist "$(ProjectDir)bin\x86\Release\$(TargetFileName).config" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetFileName).config" "$(ProjectDir)..\..\Bin"
+    <PostBuildEvent>if exist "$(ProjectDir)bin\x86\Release\$(TargetFileName)" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetFileName)" "$(ProjectDir)..\..\EXE"
+if exist "$(ProjectDir)bin\x86\Release\$(TargetName).xml" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetName).xml" "$(ProjectDir)..\..\EXE"
+if exist "$(ProjectDir)bin\x86\Release\$(TargetFileName).config" xcopy /d /y "$(ProjectDir)bin\x86\Release\$(TargetFileName).config" "$(ProjectDir)..\..\EXE"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
