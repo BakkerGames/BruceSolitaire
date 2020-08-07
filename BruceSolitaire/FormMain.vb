@@ -1,8 +1,8 @@
 ' --- FormMain.vb - 03/13/2009 ---
 
+' --- LastMod: 08/07/2020
+
 Imports System.Math
-Imports System.Drawing
-Imports System.Drawing.Imaging
 
 Public Class FormMain
 
@@ -33,7 +33,7 @@ Public Class FormMain
 
 #Region " --- FormMain Events --- "
 
-    Private Sub FormMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub FormMain_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
 
         Static FuncName As String = ObjName + "." + System.Reflection.MethodBase.GetCurrentMethod().Name
 
@@ -69,12 +69,12 @@ Public Class FormMain
 
 #Region " --- MainPanel Events --- "
 
-    Private Sub MainPanel_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MainPanel.Resize
+    Private Sub MainPanel_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles MainPanel.Resize
         ' --- Adjust the screen to fit the layout size ---
         AdjustScreen()
     End Sub
 
-    Private Sub MainPanel_Scroll(ByVal sender As Object, ByVal e As System.Windows.Forms.ScrollEventArgs) Handles MainPanel.Scroll
+    Private Sub MainPanel_Scroll(ByVal sender As Object, ByVal e As ScrollEventArgs) Handles MainPanel.Scroll
         FloatPictureBox.Top -= e.OldValue - e.NewValue
         MainPanel.Refresh()
         FloatPictureBox.Refresh()
@@ -84,7 +84,7 @@ Public Class FormMain
 
 #Region " --- MainPicture Events --- "
 
-    Private Sub MainPicture_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles MainPicture.Paint
+    Private Sub MainPicture_Paint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles MainPicture.Paint
         ' --- Get a graphics to start drawing with ---
         Dim g As Graphics = e.Graphics
         g.Clear(BoardColor)
@@ -92,12 +92,12 @@ Public Class FormMain
         g.DrawImage(BackPicture, ScreenRect, 0, 0, BackPicture.Width, BackPicture.Height, GraphicsUnit.Pixel, Nothing)
     End Sub
 
-    Private Sub MainPicture_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MainPicture.Resize
+    Private Sub MainPicture_Resize(ByVal sender As Object, ByVal e As EventArgs) Handles MainPicture.Resize
         ' --- Adjust the screen to fit the layout size ---
         AdjustScreen()
     End Sub
 
-    Private Sub MainPicture_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MainPicture.MouseDown
+    Private Sub MainPicture_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MainPicture.MouseDown
         If e.Button = Windows.Forms.MouseButtons.Left Then
             Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
             Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
@@ -110,7 +110,7 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub MainPicture_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MainPicture.MouseMove
+    Private Sub MainPicture_MouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MainPicture.MouseMove
         If MouseIsDown Then
             Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
             Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
@@ -118,7 +118,7 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub MainPicture_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles MainPicture.MouseUp
+    Private Sub MainPicture_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MainPicture.MouseUp
         If MouseIsDown Then
             Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
             Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
@@ -131,7 +131,7 @@ Public Class FormMain
 
 #Region " --- FloatPictureBox Events --- "
 
-    Private Sub FloatPictureBox_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles FloatPictureBox.MouseDown
+    Private Sub FloatPictureBox_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles FloatPictureBox.MouseDown
         If MouseIsDown Then
             Dim X As Integer = CInt(Round((e.X + FloatPictureBox.Left) / ScaleFactor))
             Dim Y As Integer = CInt(Round((e.Y + FloatPictureBox.Top) / ScaleFactor))
@@ -140,7 +140,7 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub FloatPictureBox_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles FloatPictureBox.MouseUp
+    Private Sub FloatPictureBox_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles FloatPictureBox.MouseUp
         If MouseIsDown Then
             Dim X As Integer = CInt(Round(e.X / ScaleFactor))
             Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
@@ -153,8 +153,8 @@ Public Class FormMain
 
 #Region " --- MenuItem Events --- "
 
-    Private Sub NewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripMenuItem.Click
-        If MessageBox.Show("Are you sure you want to start a new game?", "New game?", MessageBoxButtons.YesNo, _
+    Private Sub NewToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles NewToolStripMenuItem.Click
+        If MessageBox.Show("Are you sure you want to start a new game?", "New game?", MessageBoxButtons.YesNo,
                            MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) = Windows.Forms.DialogResult.No Then
             Exit Sub
         End If
@@ -163,12 +163,12 @@ Public Class FormMain
         End If
     End Sub
 
-    Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
+    Private Sub AboutToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles AboutToolStripMenuItem.Click
         Dim a As New AboutForm
         a.ShowDialog()
     End Sub
 
-    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Close()
     End Sub
 
@@ -176,7 +176,7 @@ Public Class FormMain
 
 #Region " --- Timer Events --- "
 
-    Private Sub TickTimer_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles TickTimer.Tick
+    Private Sub TickTimer_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles TickTimer.Tick
         MyEngine.Tick()
         ' '' --- scroll the screen if floating off the screen ---
         ''If MouseIsDown Then
@@ -237,8 +237,8 @@ Public Class FormMain
             If FloatPicture Is Nothing OrElse FloatPicture.Width <> ChangedStack.StackSize.Width OrElse FloatPicture.Height <> ChangedStack.StackSize.Height Then
                 FloatPicture = New Bitmap(ChangedStack.StackSize.Width, ChangedStack.StackSize.Height)
             End If
-            If FloatPictureBox.Image Is Nothing OrElse _
-               FloatPictureBox.Width <> Round(ChangedStack.StackSize.Width * ScaleFactor) OrElse _
+            If FloatPictureBox.Image Is Nothing OrElse
+               FloatPictureBox.Width <> Round(ChangedStack.StackSize.Width * ScaleFactor) OrElse
                FloatPictureBox.Height <> Round(ChangedStack.StackSize.Height * ScaleFactor) Then
                 FloatPictureBox.Image = New Bitmap(CInt(Round(ChangedStack.StackSize.Width * ScaleFactor)), CInt(Round(ChangedStack.StackSize.Height * ScaleFactor)))
                 FloatPictureBox.Width = CInt(Round(ChangedStack.StackSize.Width * ScaleFactor))
@@ -251,17 +251,17 @@ Public Class FormMain
             For LoopNum As Integer = StartNum To ChangedStack.Count - 1
                 TempCard = ChangedStack.Item(LoopNum)
                 If TempCard.FaceUp Then
-                    g.DrawImage(My.Resources.CardDeck71x95, _
-                        ChangedStack.FaceUpOfs.Width * LoopNum, _
-                        ChangedStack.FaceUpOfs.Height * LoopNum, _
-                        New Rectangle((TempCard.Rank - 1) * CardWidth, _
-                                      (TempCard.Suit - 1) * CardHeight, _
-                                      CardWidth, CardHeight), _
+                    g.DrawImage(My.Resources.CardDeck71x95,
+                        ChangedStack.FaceUpOfs.Width * LoopNum,
+                        ChangedStack.FaceUpOfs.Height * LoopNum,
+                        New Rectangle((TempCard.Rank - 1) * CardWidth,
+                                      (TempCard.Suit - 1) * CardHeight,
+                                      CardWidth, CardHeight),
                         GraphicsUnit.Pixel)
                 Else
-                    g.DrawImageUnscaled(My.Resources.CardBack71x95, _
-                        ChangedStack.FaceDownOfs.Width * LoopNum, _
-                        ChangedStack.FaceDownOfs.Height * LoopNum, _
+                    g.DrawImageUnscaled(My.Resources.CardBack71x95,
+                        ChangedStack.FaceDownOfs.Width * LoopNum,
+                        ChangedStack.FaceDownOfs.Height * LoopNum,
                         CardWidth, CardHeight)
                 End If
             Next
@@ -289,24 +289,24 @@ Public Class FormMain
             g.DrawRectangle(Pens.Green, ChangedStack.Location.X + 1, ChangedStack.Location.Y + 1, CardWidth - 2, CardHeight - 2)
         Else
             Dim StartNum As Integer = 0
-            If ChangedStack.FaceUpOfs.Width = 0 AndAlso ChangedStack.FaceUpOfs.Height = 0 AndAlso _
+            If ChangedStack.FaceUpOfs.Width = 0 AndAlso ChangedStack.FaceUpOfs.Height = 0 AndAlso
                 ChangedStack.FaceDownOfs.Width = 0 AndAlso ChangedStack.FaceDownOfs.Height = 0 Then
                 StartNum = ChangedStack.Count - 1
             End If
             For LoopNum As Integer = StartNum To ChangedStack.Count - 1
                 TempCard = ChangedStack.Item(LoopNum)
                 If TempCard.FaceUp Then
-                    g.DrawImage(My.Resources.CardDeck71x95, _
-                        ChangedStack.Location.X + (ChangedStack.FaceUpOfs.Width * LoopNum), _
-                        ChangedStack.Location.Y + (ChangedStack.FaceUpOfs.Height * LoopNum), _
-                        New Rectangle((TempCard.Rank - 1) * CardWidth, _
-                                      (TempCard.Suit - 1) * CardHeight, _
-                                      CardWidth, CardHeight), _
+                    g.DrawImage(My.Resources.CardDeck71x95,
+                        ChangedStack.Location.X + (ChangedStack.FaceUpOfs.Width * LoopNum),
+                        ChangedStack.Location.Y + (ChangedStack.FaceUpOfs.Height * LoopNum),
+                        New Rectangle((TempCard.Rank - 1) * CardWidth,
+                                      (TempCard.Suit - 1) * CardHeight,
+                                      CardWidth, CardHeight),
                         GraphicsUnit.Pixel)
                 Else
-                    g.DrawImageUnscaled(My.Resources.CardBack71x95, _
-                        ChangedStack.Location.X + (ChangedStack.FaceDownOfs.Width * LoopNum), _
-                        ChangedStack.Location.Y + (ChangedStack.FaceDownOfs.Height * LoopNum), _
+                    g.DrawImageUnscaled(My.Resources.CardBack71x95,
+                        ChangedStack.Location.X + (ChangedStack.FaceDownOfs.Width * LoopNum),
+                        ChangedStack.Location.Y + (ChangedStack.FaceDownOfs.Height * LoopNum),
                         CardWidth, CardHeight)
                 End If
             Next

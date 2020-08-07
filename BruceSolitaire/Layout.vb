@@ -55,14 +55,4 @@ Public Class Layout
         Return Nothing
     End Function
 
-    'Public Function GetStackRectangle(ByVal Name As String) As Rectangle
-    '    For Each TempStack As Stack In Stacks
-    '        If TempStack.Name.ToUpper = Name.ToUpper Then
-    '            if 
-    '                Return TempStack
-    '            End If
-    '    Next
-    '    Return Nothing
-    'End Function
-
 End Class

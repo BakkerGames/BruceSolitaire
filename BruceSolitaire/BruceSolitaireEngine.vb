@@ -213,17 +213,17 @@ Public Class BruceSolitaireEngine
         For Each TempStack As Stack In MyLayout.Stacks
             If TempStack.Name = "FLOAT" Then Continue For
             If TempStack.Name = "DECK" Then Continue For
-            If TempStack.InStack(X, Y) OrElse _
-               TempStack.InStack(FloatStack.Location.X, FloatStack.Location.Y) OrElse _
-               TempStack.InStack(FloatStack.Location.X + FloatStack.StackSize.Width, FloatStack.Location.Y) OrElse _
-               TempStack.InStack(FloatStack.Location.X, FloatStack.Location.Y + FloatStack.StackSize.Height) OrElse _
+            If TempStack.InStack(X, Y) OrElse
+               TempStack.InStack(FloatStack.Location.X, FloatStack.Location.Y) OrElse
+               TempStack.InStack(FloatStack.Location.X + FloatStack.StackSize.Width, FloatStack.Location.Y) OrElse
+               TempStack.InStack(FloatStack.Location.X, FloatStack.Location.Y + FloatStack.StackSize.Height) OrElse
                TempStack.InStack(FloatStack.Location.X + FloatStack.StackSize.Width, FloatStack.Location.Y + FloatStack.StackSize.Height) Then
                 Select Case TempStack.Name
                     Case "BUILD1", "BUILD2", "BUILD3", "BUILD4"
                         If FloatStack.Count > 1 Then Exit For
-                        If (TempStack.Count = 0 AndAlso FloatStack.Item(0).Rank = 1) OrElse _
-                               (TempStack.Count > 0 AndAlso _
-                                TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso _
+                        If (TempStack.Count = 0 AndAlso FloatStack.Item(0).Rank = 1) OrElse
+                               (TempStack.Count > 0 AndAlso
+                                TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso
                                 TempStack.Item(TempStack.Count - 1).Rank + 1 = FloatStack.Item(0).Rank) Then
                             TempCard = FloatStack.RemoveTop
                             TempStack.Add(TempCard)
@@ -237,8 +237,8 @@ Public Class BruceSolitaireEngine
                         End If
                         Exit For
                     Case "PLAY1", "PLAY2", "PLAY3", "PLAY4", "PLAY5", "PLAY6", "PLAY7"
-                        If (TempStack.Count = 0) OrElse _
-                               (TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso _
+                        If (TempStack.Count = 0) OrElse
+                               (TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso
                                 TempStack.Item(TempStack.Count - 1).Rank - 1 = FloatStack.Item(0).Rank) Then
                             TempList = FloatStack.RemoveFrom(0)
                             For Each TempCard In TempList
@@ -281,9 +281,9 @@ Public Class BruceSolitaireEngine
             Select Case TempStack.Name
                 Case "BUILD1", "BUILD2", "BUILD3", "BUILD4"
                     If FloatStack.Count > 1 Then Exit For
-                    If (TempStack.Count = 0 AndAlso FloatStack.Item(0).Rank = 1) OrElse _
-                           (TempStack.Count > 0 AndAlso _
-                            TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso _
+                    If (TempStack.Count = 0 AndAlso FloatStack.Item(0).Rank = 1) OrElse
+                           (TempStack.Count > 0 AndAlso
+                            TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso
                             TempStack.Item(TempStack.Count - 1).Rank + 1 = FloatStack.Item(0).Rank) Then
                         TempCard = FloatStack.RemoveTop
                         TempStack.Add(TempCard)
@@ -302,7 +302,7 @@ Public Class BruceSolitaireEngine
             Select Case TempStack.Name
                 Case "PLAY1", "PLAY2", "PLAY3", "PLAY4", "PLAY5", "PLAY6", "PLAY7"
                     If TempStack.Count > 0 Then
-                        If (TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso _
+                        If (TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso
                                 TempStack.Item(TempStack.Count - 1).Rank - 1 = FloatStack.Item(0).Rank) Then
                             TempList = FloatStack.RemoveFrom(0)
                             For Each TempCard In TempList
@@ -412,9 +412,9 @@ Public Class BruceSolitaireEngine
         Dim YSign As Integer = Sign(TargetY - FloatStack.Location.Y)
         Dim MoveDistX As Integer = MoveDist
         Dim MoveDistY As Integer = MoveDist
-        If FloatStack.Location.X <> TargetX AndAlso FloatStack.Location.Y <> TargetY AndAlso _
+        If FloatStack.Location.X <> TargetX AndAlso FloatStack.Location.Y <> TargetY AndAlso
            Abs(TargetX - FloatStack.Location.X) <> Abs(TargetY - FloatStack.Location.Y) Then
-            Dim Hypo As Double = Sqrt(((TargetX - FloatStack.Location.X) * (TargetX - FloatStack.Location.X)) + _
+            Dim Hypo As Double = Sqrt(((TargetX - FloatStack.Location.X) * (TargetX - FloatStack.Location.X)) +
                 ((TargetY - FloatStack.Location.Y) * (TargetY - FloatStack.Location.Y)))
             If Hypo > MoveDist Then
                 MoveDistX = CInt(Round(Abs(TargetX - FloatStack.Location.X) * MoveDist / Hypo))
