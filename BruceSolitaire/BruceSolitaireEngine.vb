@@ -13,6 +13,7 @@
 ' 08/08/2020 - Replaced Click and RightClick with single routine DoClick. Allows all card clicking
 '              to be managed by a single routine, so left and right clicks can both work the same.
 '            - Added MovingCards() so calling program knows if cards are on the FLOAT stack.
+'            - Changed CardOfs from 20 to 24 so cards can be read more easily.
 ' ----------------------------------------------------------------------------------------------------
 
 Imports System.Math
@@ -26,7 +27,7 @@ Public Class BruceSolitaireEngine
 
     Private SepWidth As Integer = 20
     Private SepHeight As Integer = 20
-    Private CardOfs As Integer = 20
+    Private CardOfs As Integer = 24
 
     Private MoveState As Integer = 0
     Private MoveDist As Integer = 0
