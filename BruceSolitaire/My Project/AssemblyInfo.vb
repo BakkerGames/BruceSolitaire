@@ -11,14 +11,14 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("BruceSolitaire")> 
 <Assembly: AssemblyDescription("Bruce's Solitaire is a solitaire card game similar to Spider and Yukon. Move stacks of cards together, build up and down by suit.")> 
 <Assembly: AssemblyCompany("BakkerGames, Inc.")> 
-<Assembly: AssemblyProduct("BruceSolitaire")> 
-<Assembly: AssemblyCopyright("Copyright © BakkerGames, Inc. 2016")> 
+<Assembly: AssemblyProduct("BruceSolitaire")>
+<Assembly: AssemblyCopyright("Copyright © BakkerGames, Inc. 2020")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("8dfd580c-3f0a-4276-8765-a7a2d36fe05b")> 
+<Assembly: Guid("8dfd580c-3f0a-4276-8765-a7a2d36fe05b")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2016.8.11.213")> 
-<Assembly: AssemblyFileVersion("2016.8.11.213")> 
+<Assembly: AssemblyVersion("2020.8.8.1353")>
+<Assembly: AssemblyFileVersion("2020.8.8.1353")>
