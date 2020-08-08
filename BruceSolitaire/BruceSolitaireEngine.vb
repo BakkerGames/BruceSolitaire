@@ -1,15 +1,18 @@
 ' -------------------------------------------
-' --- BruceSolitaireLogic.vb - 11/30/2015 ---
+' --- BruceSolitaireLogic.vb - 08/08/2020 ---
 ' -------------------------------------------
 
 ' ----------------------------------------------------------------------------------------------------
-' 11/30/2015 - SBakker
-'            - Added auto flipping of a face-down card.
-'            - Added left-click to move cards to Build stacks.
 ' 03/15/2014 - SBakker
 '            - Added Bootstrapping to a a local area instead of using the ClickOnce install.
 '            - Added the Settings Provider to save settings in the local area with the program.
 '            - Added AboutMain.vb which shows the current path in the Status Bar.
+' 11/30/2015 - SBakker
+'            - Added auto flipping of a face-down card.
+'            - Added left-click to move cards to Build stacks.
+' 08/08/2020 - Replaced Click and RightClick with single routine DoClick. Allows all card clicking
+'              to be managed by a single routine, so left and right clicks can both work the same.
+'            - Added MovingCards() so calling program knows if cards are on the FLOAT stack.
 ' ----------------------------------------------------------------------------------------------------
 
 Imports System.Math
@@ -120,76 +123,83 @@ Public Class BruceSolitaireEngine
         Return True
     End Function
 
-    Public Function Click(ByVal X As Integer, ByVal Y As Integer) As Boolean
-        Dim TempCard As Card
+    Public Function DoClick(ByVal X As Integer, ByVal Y As Integer) As Boolean
         ' ------------------
         If MoveState <> 0 Then Return False
+        ' --- Find the clicked card
         For Each TempStack As Stack In MyLayout.Stacks
+            If TempStack.Count = 0 Then Continue For
             If TempStack.Name = "FLOAT" Then Continue For
-            If TempStack.InStack(X, Y) Then
-                Select Case TempStack.Name
-                    Case "PLAY1", "PLAY2", "PLAY3", "PLAY4", "PLAY5", "PLAY6", "PLAY7", "DECK", "FLIP1", "FLIP2"
-                        Dim CardNum As Integer = TempStack.ClickedCardNum(X, Y)
-                        If TempStack.Count = 0 Then Return False
-                        If Not TempStack.Item(CardNum).FaceUp AndAlso CardNum = TempStack.Count - 1 Then
-                            ' --- Should never happen, DoCascadeMoves() handles this ---
-                            TempStack.Item(CardNum).FaceUp = True
-                            RaiseEvent StackChanged(TempStack)
-                            DoCascadeMoves()
-                            CheckGameOver()
-                            Return True
-                        End If
-                        If TempStack.Item(CardNum).FaceUp Then
-                            ' --- Check if card can move directly to Build stack ---
-                            If CardNum = TempStack.Count - 1 Then
-                                For Each TempStack2 As Stack In MyLayout.Stacks
-                                    If TempStack2.Name.StartsWith("BUILD") Then
-                                        If TempStack2.Count = 0 AndAlso TempStack.Item(CardNum).Rank = 1 Then ' Clicked on an Ace
-                                            TempCard = TempStack.RemoveTop
-                                            TempStack2.Add(TempCard)
-                                            RaiseEvent StackChanged(TempStack)
-                                            RaiseEvent StackChanged(TempStack2)
-                                            DoCascadeMoves()
-                                            CheckGameOver()
-                                            Return True
-                                        End If
-                                        If TempStack2.Count > 0 Then
-                                            If TempStack2.ViewTop.Suit = TempStack.ViewTop.Suit AndAlso
-                                                TempStack2.ViewTop.Rank = TempStack.ViewTop.Rank - 1 Then
-                                                TempCard = TempStack.RemoveTop
-                                                TempStack2.Add(TempCard)
-                                                RaiseEvent StackChanged(TempStack)
-                                                RaiseEvent StackChanged(TempStack2)
-                                                DoCascadeMoves()
-                                                CheckGameOver()
-                                                Return True
-                                            End If
-                                        End If
-                                    End If
-                                Next
-                            End If
-                            ' --- Move the selected card onto the Float stack ---
-                            DragOfs = TempStack.ClickedCardOfs(X, Y)
-                            Dim FloatStack As Stack = MyLayout.GetStack("FLOAT")
-                            MoveState = 200 ' dragging some cards
-                            CardsCameFrom = TempStack
-                            Dim TempList As List(Of Card) = TempStack.RemoveFrom(CardNum)
-                            For Each TempCard In TempList
-                                FloatStack.Add(TempCard)
-                            Next
-                            FloatStack.Location.X = X - DragOfs.Width
-                            FloatStack.Location.Y = Y - DragOfs.Height
-                            FloatStack.FaceUpOfs = TempStack.FaceUpOfs
-                            FloatStack.FaceDownOfs = TempStack.FaceDownOfs
-                            FloatStack.Visible = True
-                            RaiseEvent FloatChanged(FloatStack)
-                            RaiseEvent StackChanged(TempStack)
-                            Return True
-                        End If
-                End Select
+            If Not TempStack.InStack(X, Y) Then Continue For
+            If TempStack.Name.StartsWith("BUILD") Then
+                Return False
             End If
+            ' --- Found the clicked Card
+            Dim CardNum As Integer = TempStack.ClickedCardNum(X, Y)
+            Dim TempCard As Card = TempStack.Items(CardNum)
+            ' --- Check if card can move directly to Build stack ---
+            If CardNum = TempStack.Count - 1 Then
+                For Each TempStack2 As Stack In MyLayout.Stacks
+                    If Not TempStack2.Name.StartsWith("BUILD") Then Continue For
+                    If TempStack2.Count = 0 Then
+                        If TempCard.Rank <> 1 Then Continue For ' Not an Ace
+                    ElseIf TempStack2.ViewTop.Suit <> TempCard.Suit Then
+                        Continue For
+                    ElseIf TempStack2.ViewTop.Rank <> TempCard.Rank - 1 Then
+                        Continue For
+                    End If
+                    ' --- Move card to Build stack
+                    Dim TempCard2 As Card = TempStack.RemoveTop
+                    TempStack2.Add(TempCard2)
+                    RaiseEvent StackChanged(TempStack)
+                    RaiseEvent StackChanged(TempStack2)
+                    DoCascadeMoves()
+                    CheckGameOver()
+                    Return True
+                Next
+            End If
+            ' --- Check if card(s) can be moved to another Play stack on top of next card
+            For Each TempStack2 As Stack In MyLayout.Stacks
+                If Not TempStack2.Name.StartsWith("PLAY") Then Continue For
+                If TempStack2.Name = TempStack.Name Then Continue For
+                If TempStack2.Count = 0 Then Continue For
+                Dim TempCard2 As Card = TempStack2.ViewTop()
+                If TempCard2.Suit <> TempCard.Suit Then Continue For
+                If TempCard2.Rank <> TempCard.Rank + 1 Then Continue For
+                ' --- Move cards
+                Dim TempList As List(Of Card) = TempStack.RemoveFrom(CardNum)
+                For Each TempCard3 As Card In TempList
+                    TempStack2.Add(TempCard3)
+                Next
+                RaiseEvent StackChanged(TempStack)
+                RaiseEvent StackChanged(TempStack2)
+                DoCascadeMoves()
+                CheckGameOver()
+                Return True
+            Next
+            ' --- Move the selected card onto the Float stack ---
+            DragOfs = TempStack.ClickedCardOfs(X, Y)
+            Dim FloatStack As Stack = MyLayout.GetStack("FLOAT")
+            MoveState = 200 ' dragging some cards
+            CardsCameFrom = TempStack
+            Dim TempList2 As List(Of Card) = TempStack.RemoveFrom(CardNum)
+            For Each TempCard4 As Card In TempList2
+                FloatStack.Add(TempCard4)
+            Next
+            FloatStack.Location.X = X - DragOfs.Width
+            FloatStack.Location.Y = Y - DragOfs.Height
+            FloatStack.FaceUpOfs = TempStack.FaceUpOfs
+            FloatStack.FaceDownOfs = TempStack.FaceDownOfs
+            FloatStack.Visible = True
+            RaiseEvent FloatChanged(FloatStack)
+            RaiseEvent StackChanged(TempStack)
+            Return True
         Next
         Return False
+    End Function
+
+    Public Function MovingCards() As Boolean
+        Return (MoveState = 200)
     End Function
 
     Public Function Drag(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -254,70 +264,6 @@ Public Class BruceSolitaireEngine
                         End If
                 End Select
             End If
-        Next
-        ' --- Wrong place to drop cards ---
-        TempList = FloatStack.RemoveFrom(0)
-        For Each TempCard In TempList
-            CardsCameFrom.Add(TempCard)
-        Next
-        FloatStack.Visible = False
-        RaiseEvent FloatChanged(FloatStack)
-        RaiseEvent StackChanged(CardsCameFrom)
-        MoveState = 0
-        Return False
-    End Function
-
-    Public Function RightClick(ByVal X As Integer, ByVal Y As Integer) As Boolean
-        Dim TempCard As Card
-        Dim TempList As List(Of Card)
-        ' ---------------------------
-        If MoveState <> 0 Then Return False
-        If Not Me.Click(X, Y) Then Return False
-        If MoveState <> 200 Then Return False
-        ' --- See if correct place to drop cards ---
-        Dim FloatStack As Stack = MyLayout.GetStack("FLOAT")
-        ' --- Check if this FloatStack can move automatically to a Build pile ---
-        For Each TempStack As Stack In MyLayout.Stacks
-            Select Case TempStack.Name
-                Case "BUILD1", "BUILD2", "BUILD3", "BUILD4"
-                    If FloatStack.Count > 1 Then Exit For
-                    If (TempStack.Count = 0 AndAlso FloatStack.Item(0).Rank = 1) OrElse
-                           (TempStack.Count > 0 AndAlso
-                            TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso
-                            TempStack.Item(TempStack.Count - 1).Rank + 1 = FloatStack.Item(0).Rank) Then
-                        TempCard = FloatStack.RemoveTop
-                        TempStack.Add(TempCard)
-                        FloatStack.Visible = False
-                        RaiseEvent FloatChanged(FloatStack)
-                        RaiseEvent StackChanged(TempStack)
-                        MoveState = 0
-                        DoCascadeMoves()
-                        CheckGameOver()
-                        Return True
-                    End If
-            End Select
-        Next
-        ' --- Check if this FloatStack can move automatically to a Play pile ---
-        For Each TempStack As Stack In MyLayout.Stacks
-            Select Case TempStack.Name
-                Case "PLAY1", "PLAY2", "PLAY3", "PLAY4", "PLAY5", "PLAY6", "PLAY7"
-                    If TempStack.Count > 0 Then
-                        If (TempStack.Item(TempStack.Count - 1).Suit = FloatStack.Item(0).Suit AndAlso
-                                TempStack.Item(TempStack.Count - 1).Rank - 1 = FloatStack.Item(0).Rank) Then
-                            TempList = FloatStack.RemoveFrom(0)
-                            For Each TempCard In TempList
-                                TempStack.Add(TempCard)
-                            Next
-                            FloatStack.Visible = False
-                            RaiseEvent FloatChanged(FloatStack)
-                            RaiseEvent StackChanged(TempStack)
-                            MoveState = 0
-                            DoCascadeMoves()
-                            CheckGameOver()
-                            Return True
-                        End If
-                    End If
-            End Select
         Next
         ' --- Wrong place to drop cards ---
         TempList = FloatStack.RemoveFrom(0)

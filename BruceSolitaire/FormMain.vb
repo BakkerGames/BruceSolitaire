@@ -1,6 +1,6 @@
 ' --- FormMain.vb - 03/13/2009 ---
 
-' --- LastMod: 08/07/2020
+' --- LastMod: 08/08/2020
 
 Imports System.Math
 
@@ -98,15 +98,13 @@ Public Class FormMain
     End Sub
 
     Private Sub MainPicture_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MainPicture.MouseDown
-        If e.Button = Windows.Forms.MouseButtons.Left Then
-            Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
-            Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
-            MyEngine.Click(X, Y)
-            MouseIsDown = True
-        ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
-            Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
-            Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
-            MyEngine.RightClick(X, Y)
+        ' --- All click events are handled the same now, so left or right click work the same.
+        Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
+        Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
+        If MyEngine.DoClick(X, Y) Then
+            If MyEngine.MovingCards Then
+                MouseIsDown = True
+            End If
         End If
     End Sub
 
