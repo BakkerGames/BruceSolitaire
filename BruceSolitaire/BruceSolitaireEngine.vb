@@ -138,6 +138,9 @@ Public Class BruceSolitaireEngine
             ' --- Found the clicked Card
             Dim CardNum As Integer = TempStack.ClickedCardNum(X, Y)
             Dim TempCard As Card = TempStack.Items(CardNum)
+            If Not TempCard.FaceUp Then
+                Return False
+            End If
             ' --- Check if card can move directly to Build stack ---
             If CardNum = TempStack.Count - 1 Then
                 For Each TempStack2 As Stack In MyLayout.Stacks
