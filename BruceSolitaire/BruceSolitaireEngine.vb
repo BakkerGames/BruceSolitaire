@@ -53,13 +53,17 @@ Public Class BruceSolitaireEngine
             .CardSize = CardSize
             TempStack = New Stack("DECK")
             TempStack.CardSize = NewCardSize
-            TempStack.Location = New Point(SepWidth, (SepHeight * 3) + (CardSize.Height * 2))
+            TempStack.Location = New Point((CardSize.Width * 4) + (SepWidth * 5), (SepHeight * 9) + (CardSize.Height * 2))
             .Stacks.Add(TempStack)
             TempStack = New Stack("FLIP1")
             TempStack.CardSize = NewCardSize
-            TempStack.Location = New Point(SepWidth, (SepHeight * 4) + (CardSize.Height * 3))
+            TempStack.Location = New Point(SepWidth, (SepHeight * 3) + (CardSize.Height * 2))
             .Stacks.Add(TempStack)
             TempStack = New Stack("FLIP2")
+            TempStack.CardSize = NewCardSize
+            TempStack.Location = New Point(SepWidth, (SepHeight * 4) + (CardSize.Height * 3))
+            .Stacks.Add(TempStack)
+            TempStack = New Stack("FLIP3")
             TempStack.CardSize = NewCardSize
             TempStack.Location = New Point(SepWidth, (SepHeight * 5) + (CardSize.Height * 4))
             .Stacks.Add(TempStack)
@@ -202,7 +206,7 @@ Public Class BruceSolitaireEngine
         Return False
     End Function
 
-    Public Function MovingCards() As Boolean
+    Public Function IsMovingCards() As Boolean
         Return (MoveState = 200)
     End Function
 
@@ -302,6 +306,7 @@ Public Class BruceSolitaireEngine
                     FloatStack.Location = DeckStack.Location
                     FloatStack.Add(TempCard)
                     FloatStack.Visible = True
+                    RaiseEvent StackChanged(DeckStack)
                 End If
                 If MoveFloatTo(TargetStack.Location.X, TargetY) Then
                     Dim TempCard As Card = FloatStack.RemoveTop
@@ -316,7 +321,7 @@ Public Class BruceSolitaireEngine
                 Else
                     RaiseEvent FloatChanged(FloatStack)
                 End If
-            Case 50 To 51
+            Case 50 To 52
                 MoveDist = MoveDistDeal
                 Dim FloatStack As Stack = MyLayout.GetStack("FLOAT")
                 Dim StackNum As Integer = MoveState - 49
@@ -329,6 +334,7 @@ Public Class BruceSolitaireEngine
                     FloatStack.Location = DeckStack.Location
                     FloatStack.Add(TempCard)
                     FloatStack.Visible = True
+                    RaiseEvent StackChanged(DeckStack)
                 End If
                 If MoveFloatTo(TargetStack.Location.X, TargetY) Then
                     Dim TempCard As Card = FloatStack.RemoveTop
@@ -341,9 +347,9 @@ Public Class BruceSolitaireEngine
                 Else
                     RaiseEvent FloatChanged(FloatStack)
                 End If
-            Case 52
+            Case 53
                 Dim DeckStack As Stack = MyLayout.GetStack("DECK")
-                DeckStack.Item(0).FaceUp = True
+                DeckStack.Visible = False
                 RaiseEvent StackChanged(DeckStack)
                 MoveState = 0
                 DoCascadeMoves()
@@ -455,7 +461,7 @@ Public Class BruceSolitaireEngine
                                 End If
                             End If
                         End If
-                        If TempStack2.Name = "DECK" OrElse TempStack2.Name.StartsWith("FLIP") Then
+                        If TempStack2.Name.StartsWith("FLIP") Then
                             For Each TempCard In TempStack2.Items
                                 If TempCard.Rank = 1 Then ' Found an Ace
                                     RaiseEvent DebugMessage("Found an Ace: " + TempStack2.Name + " on " + TempStack.Name)
@@ -477,7 +483,7 @@ Public Class BruceSolitaireEngine
                                 End If
                             End If
                         End If
-                        If TempStack2.Name = "DECK" OrElse TempStack2.Name.StartsWith("FLIP") Then
+                        If TempStack2.Name.StartsWith("FLIP") Then
                             For Each TempCard In TempStack2.Items
                                 If TempCard.Suit = CurrCard.Suit AndAlso TempCard.Rank = CurrCard.Rank + 1 Then ' Found next card
                                     RaiseEvent DebugMessage("Found next card: " + TempStack2.Name + " on " + TempStack.Name)
@@ -509,7 +515,7 @@ Public Class BruceSolitaireEngine
                             End If
                         Next
                     End If
-                    If (TempStack2.Name = "DECK" OrElse TempStack2.Name.StartsWith("FLIP")) AndAlso TempStack2.Count > 0 Then
+                    If TempStack2.Name.StartsWith("FLIP") AndAlso TempStack2.Count > 0 Then
                         For Each TempCard In TempStack2.Items
                             If TempCard.Suit = CurrCard.Suit AndAlso TempCard.Rank = CurrCard.Rank - 1 Then ' Found next card
                                 RaiseEvent DebugMessage("Found next card: " + TempStack2.Name + " on " + TempStack.Name)

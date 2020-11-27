@@ -102,7 +102,7 @@ Public Class FormMain
         Dim X As Integer = CInt(Round((e.X - ScreenOfs) / ScaleFactor))
         Dim Y As Integer = CInt(Round(e.Y / ScaleFactor))
         If MyEngine.DoClick(X, Y) Then
-            If MyEngine.MovingCards Then
+            If MyEngine.IsMovingCards Then
                 MouseIsDown = True
             End If
         End If
@@ -278,36 +278,40 @@ Public Class FormMain
         Dim TempCard As Card
         ' ------------------
         Dim g As Graphics = Graphics.FromImage(BackPicture)
-        If ChangedStack.LastCount > ChangedStack.Count Then
-            g.FillRectangle(BoardBrush, ChangedStack.Location.X, ChangedStack.Location.Y, ChangedStack.LastStackSize.Width, ChangedStack.LastStackSize.Height)
+        If Not ChangedStack.Visible OrElse ChangedStack.LastCount > ChangedStack.Count Then
+            g.FillRectangle(BoardBrush, ChangedStack.Location.X, ChangedStack.Location.Y,
+                            ChangedStack.LastStackSize.Width + 1, ChangedStack.LastStackSize.Height + 1)
         End If
-        If ChangedStack.Count = 0 Then
-            g.FillRectangle(BoardBrush, ChangedStack.Location.X, ChangedStack.Location.Y, CardWidth, CardHeight)
-            g.DrawRectangle(Pens.Green, ChangedStack.Location.X, ChangedStack.Location.Y, CardWidth, CardHeight)
-            g.DrawRectangle(Pens.Green, ChangedStack.Location.X + 1, ChangedStack.Location.Y + 1, CardWidth - 2, CardHeight - 2)
-        Else
-            Dim StartNum As Integer = 0
-            If ChangedStack.FaceUpOfs.Width = 0 AndAlso ChangedStack.FaceUpOfs.Height = 0 AndAlso
-                ChangedStack.FaceDownOfs.Width = 0 AndAlso ChangedStack.FaceDownOfs.Height = 0 Then
-                StartNum = ChangedStack.Count - 1
-            End If
-            For LoopNum As Integer = StartNum To ChangedStack.Count - 1
-                TempCard = ChangedStack.Item(LoopNum)
-                If TempCard.FaceUp Then
-                    g.DrawImage(My.Resources.CardDeck71x95,
-                        ChangedStack.Location.X + (ChangedStack.FaceUpOfs.Width * LoopNum),
-                        ChangedStack.Location.Y + (ChangedStack.FaceUpOfs.Height * LoopNum),
-                        New Rectangle((TempCard.Rank - 1) * CardWidth,
-                                      (TempCard.Suit - 1) * CardHeight,
-                                      CardWidth, CardHeight),
-                        GraphicsUnit.Pixel)
-                Else
-                    g.DrawImageUnscaled(My.Resources.CardBack71x95,
-                        ChangedStack.Location.X + (ChangedStack.FaceDownOfs.Width * LoopNum),
-                        ChangedStack.Location.Y + (ChangedStack.FaceDownOfs.Height * LoopNum),
-                        CardWidth, CardHeight)
+        If ChangedStack.Visible Then
+            If ChangedStack.Count = 0 Then
+                g.FillRectangle(BoardBrush, ChangedStack.Location.X, ChangedStack.Location.Y, CardWidth, CardHeight)
+                g.DrawRectangle(Pens.Green, ChangedStack.Location.X, ChangedStack.Location.Y, CardWidth, CardHeight)
+                g.DrawRectangle(Pens.Green, ChangedStack.Location.X + 1, ChangedStack.Location.Y + 1,
+                                CardWidth - 2, CardHeight - 2)
+            Else
+                Dim StartNum As Integer = 0
+                If ChangedStack.FaceUpOfs.Width = 0 AndAlso ChangedStack.FaceUpOfs.Height = 0 AndAlso
+                    ChangedStack.FaceDownOfs.Width = 0 AndAlso ChangedStack.FaceDownOfs.Height = 0 Then
+                    StartNum = ChangedStack.Count - 1
                 End If
-            Next
+                For LoopNum As Integer = StartNum To ChangedStack.Count - 1
+                    TempCard = ChangedStack.Item(LoopNum)
+                    If TempCard.FaceUp Then
+                        g.DrawImage(My.Resources.CardDeck71x95,
+                            ChangedStack.Location.X + (ChangedStack.FaceUpOfs.Width * LoopNum),
+                            ChangedStack.Location.Y + (ChangedStack.FaceUpOfs.Height * LoopNum),
+                            New Rectangle((TempCard.Rank - 1) * CardWidth,
+                                          (TempCard.Suit - 1) * CardHeight,
+                                          CardWidth, CardHeight),
+                            GraphicsUnit.Pixel)
+                    Else
+                        g.DrawImageUnscaled(My.Resources.CardBack71x95,
+                            ChangedStack.Location.X + (ChangedStack.FaceDownOfs.Width * LoopNum),
+                            ChangedStack.Location.Y + (ChangedStack.FaceDownOfs.Height * LoopNum),
+                            CardWidth, CardHeight)
+                    End If
+                Next
+            End If
         End If
         g.Dispose()
         MainPicture.Refresh()

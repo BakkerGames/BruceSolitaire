@@ -11,47 +11,15 @@ Public Class Stack
         _Name = Name
     End Sub
 
-    Private _Name As String = ""
-    Public Property Name() As String
-        Get
-            Return _Name
-        End Get
-        Set(ByVal value As String)
-            _Name = value
-        End Set
-    End Property
+    Public Property Name() As String = ""
 
-    Private _CardSize As New Size(0, 0)
-    Public Property CardSize() As Size
-        Get
-            Return _CardSize
-        End Get
-        Set(ByVal value As Size)
-            _CardSize = value
-        End Set
-    End Property
+    Public Property CardSize() As New Size(0, 0)
 
     Public Location As New Point(0, 0)
 
-    Private _FaceDownOfs As New Size(0, 0)
-    Public Property FaceDownOfs() As Size
-        Get
-            Return _FaceDownOfs
-        End Get
-        Set(ByVal value As Size)
-            _FaceDownOfs = value
-        End Set
-    End Property
+    Public Property FaceDownOfs() As New Size(0, 0)
 
-    Private _FaceUpOfs As New Size(0, 0)
-    Public Property FaceUpOfs() As Size
-        Get
-            Return _FaceUpOfs
-        End Get
-        Set(ByVal value As Size)
-            _FaceUpOfs = value
-        End Set
-    End Property
+    Public Property FaceUpOfs() As New Size(0, 0)
 
     Private _Rotation As Integer = 0
     Public Property Rotation() As Integer
@@ -66,25 +34,9 @@ Public Class Stack
         End Set
     End Property
 
-    Private _Visible As Boolean = True
-    Public Property Visible() As Boolean
-        Get
-            Return _Visible
-        End Get
-        Set(ByVal value As Boolean)
-            _Visible = value
-        End Set
-    End Property
+    Public Property Visible() As Boolean = True
 
-    Private _Changed As Boolean = False
-    Public Property Changed() As Boolean
-        Get
-            Return _Changed
-        End Get
-        Set(ByVal value As Boolean)
-            _Changed = value
-        End Set
-    End Property
+    Public Property Changed() As Boolean = False
 
     Private _LastCount As Integer = 0
     Public ReadOnly Property LastCount() As Integer
