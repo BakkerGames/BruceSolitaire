@@ -443,6 +443,7 @@ Public Class BruceSolitaireEngine
             End If
         Next
         If BuildCount > 51 Then
+            RaiseEvent DebugMessage("")
             RaiseEvent WonGame()
             Return True
         End If

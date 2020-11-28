@@ -42,6 +42,7 @@ Partial Class FormMain
         Me.StatusPanel = New System.Windows.Forms.Panel()
         Me.MainStatus = New System.Windows.Forms.StatusStrip()
         Me.StatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ShowHintsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainMenu.SuspendLayout()
         Me.MainPanel.SuspendLayout()
         CType(Me.FloatPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -95,8 +96,9 @@ Partial Class FormMain
         '
         'OptionsToolStripMenuItem
         '
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowHintsToolStripMenuItem})
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OptionsToolStripMenuItem.Text = "&Options"
         '
         'HelpToolStripMenuItem
@@ -183,6 +185,13 @@ Partial Class FormMain
         Me.StatusLabel.Name = "StatusLabel"
         Me.StatusLabel.Size = New System.Drawing.Size(0, 17)
         '
+        'ShowHintsToolStripMenuItem
+        '
+        Me.ShowHintsToolStripMenuItem.CheckOnClick = True
+        Me.ShowHintsToolStripMenuItem.Name = "ShowHintsToolStripMenuItem"
+        Me.ShowHintsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowHintsToolStripMenuItem.Text = "&Show Hints"
+        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -229,5 +238,5 @@ Partial Class FormMain
     Friend WithEvents FloatPictureBox As System.Windows.Forms.PictureBox
     Friend WithEvents StatusLabel As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents InstructionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-
+    Friend WithEvents ShowHintsToolStripMenuItem As ToolStripMenuItem
 End Class

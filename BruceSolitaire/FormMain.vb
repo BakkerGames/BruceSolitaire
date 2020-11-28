@@ -44,6 +44,8 @@ Public Class FormMain
             My.Settings.Save()
         End If
 
+        ShowHintsToolStripMenuItem.Checked = My.Settings.ShowHints
+
         ' --- Set background colors ---
         MainPanel.BackColor = BoardColor
         MainPicture.BackColor = BoardColor
@@ -364,9 +366,9 @@ Public Class FormMain
     End Sub
 
     Private Sub MyEngine_DebugMessage(ByVal Msg As String) Handles MyEngine.DebugMessage
-#If DEBUG Then
-        StatusLabel.Text = Msg
-#End If
+        If ShowHintsToolStripMenuItem.Checked Then
+            StatusLabel.Text = Msg
+        End If
     End Sub
 
 #End Region
@@ -393,6 +395,11 @@ Public Class FormMain
         ScreenRect = New Rectangle(ScreenOfs, 0, ScreenWidth, ScreenHeight)
         ' --- Redraw the entire screen ---
         MainPicture.Refresh()
+    End Sub
+
+    Private Sub ShowHintsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowHintsToolStripMenuItem.Click
+        My.Settings.ShowHints = ShowHintsToolStripMenuItem.Checked
+        My.Settings.Save()
     End Sub
 
 #End Region
