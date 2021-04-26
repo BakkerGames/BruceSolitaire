@@ -26,9 +26,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>BruceSolitaire</ProductName>
     <PublisherName>BakkerGames</PublisherName>
-    <MinimumRequiredVersion>2020.11.26.1908</MinimumRequiredVersion>
-    <ApplicationRevision>1908</ApplicationRevision>
-    <ApplicationVersion>2020.11.26.1908</ApplicationVersion>
+    <MinimumRequiredVersion>2021.4.26.1627</MinimumRequiredVersion>
+    <ApplicationRevision>1627</ApplicationRevision>
+    <ApplicationVersion>2021.4.26.1627</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

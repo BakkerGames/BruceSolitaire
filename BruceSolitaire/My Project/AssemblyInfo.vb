@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Bruce's Solitaire is a solitaire card game similar to Spider and Yukon. Move stacks of cards together, build up and down by suit.")> 
 <Assembly: AssemblyCompany("BakkerGames, Inc.")> 
 <Assembly: AssemblyProduct("BruceSolitaire")>
-<Assembly: AssemblyCopyright("Copyright © BakkerGames, Inc. 2020")>
+<Assembly: AssemblyCopyright("Copyright © BakkerGames, Inc. 2021")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2020.11.16.1908")>
-<Assembly: AssemblyFileVersion("2020.11.16.1908")>
+<Assembly: AssemblyVersion("2021.4.26.1627")>
+<Assembly: AssemblyFileVersion("2021.4.26.1627")>
