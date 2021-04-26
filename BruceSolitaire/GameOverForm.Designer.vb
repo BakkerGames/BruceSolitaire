@@ -22,11 +22,11 @@ Partial Class GameOverForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.GameOverLabel = New System.Windows.Forms.Label
-        Me.PlayAgainLabel = New System.Windows.Forms.Label
-        Me.YesButton = New System.Windows.Forms.Button
-        Me.NoButton = New System.Windows.Forms.Button
-        Me.GamesWonLabel = New System.Windows.Forms.Label
+        Me.GameOverLabel = New System.Windows.Forms.Label()
+        Me.PlayAgainLabel = New System.Windows.Forms.Label()
+        Me.YesButton = New System.Windows.Forms.Button()
+        Me.NoButton = New System.Windows.Forms.Button()
+        Me.GamesWonLabel = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'GameOverLabel
@@ -100,6 +100,7 @@ Partial Class GameOverForm
         Me.Controls.Add(Me.YesButton)
         Me.Controls.Add(Me.PlayAgainLabel)
         Me.Controls.Add(Me.GameOverLabel)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "GameOverForm"
